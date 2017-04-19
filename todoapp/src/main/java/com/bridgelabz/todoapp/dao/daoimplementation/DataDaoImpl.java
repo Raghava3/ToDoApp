@@ -100,5 +100,31 @@ public class DataDaoImpl implements DataDaoInter
 		}
 	}
 	}
+
+
+	@Override
+	public boolean noteToDelete(ToDoData toDoData) {
+		try{
+			Session session=sessionFactory.openSession();
+			Transaction transaction=session.beginTransaction();
+			session.delete(toDoData);
+			transaction.commit();
+			return true;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+		finally
+		{
+			if(session!=null)
+			{
+				session.close();
+			}
+		}
+	}
+	
+	
 	
 }
