@@ -81,11 +81,11 @@ public class ToDoDataController {
 	  while(iterator.hasNext())
 	 {
 		ToDoData datafromiterator=(ToDoData) iterator.next();
-		System.out.println(datafromiterator.getId());
-		System.out.println(datafromiterator.getTitle());
-		System.out.println(datafromiterator.getDescription());
-		System.out.println(datafromiterator.getReminder());
-        System.out.println(datafromiterator.getUpdated());
+		System.out.println("Note id"+datafromiterator.getId());
+		System.out.println("Title"+datafromiterator.getTitle());
+		System.out.println("Description"+datafromiterator.getDescription());
+		System.out.println("Reminder"+datafromiterator.getReminder());
+        System.out.println("Updated"+datafromiterator.getUpdated());
 	 }
 	
 	  return new  ResponseEntity<String>("data retrived",HttpStatus.OK);
