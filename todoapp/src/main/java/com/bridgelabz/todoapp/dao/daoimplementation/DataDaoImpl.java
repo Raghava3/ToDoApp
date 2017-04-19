@@ -25,27 +25,24 @@ public class DataDaoImpl implements DataDaoInter
 	@Autowired
 	private SessionFactory sessionFactory;
 	
+	Session session;
+	Transaction transaction;
 	// This is method for user registration
 	public boolean addTitle(ToDoData toDoData)
 
 	{
-
-		Session session = sessionFactory.openSession();
-		Transaction tr = session.beginTransaction();
-
+		 session = sessionFactory.openSession();
+		 transaction = session.beginTransaction();
 		try {
-
 			session.save(toDoData);
-			tr.commit();
+			transaction.commit();
 			session.close();
 			return true;
 		}
-
 		catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
-
 		finally {
 			if (session != null) {
 				session.close();
@@ -53,6 +50,7 @@ public class DataDaoImpl implements DataDaoInter
 		}
 	}
 
+	
 	@Override
 	public List<ToDoData> dataList(int id) {
 		Session session=sessionFactory.openSession();
@@ -64,8 +62,6 @@ public class DataDaoImpl implements DataDaoInter
 		query.setParameter("id",id);
 		List<ToDoData> listofdata=query.list();
 		transaction.commit();
-		
-		
 		return listofdata;
 	  }
 	catch(Exception e){
@@ -79,4 +75,30 @@ public class DataDaoImpl implements DataDaoInter
 		}
    	}
   }
+
+
+	@Override
+	public boolean noteUpdate(ToDoData toDoData) 
+	{
+	try{
+		Session session=sessionFactory.openSession();
+		Transaction transaction=session.beginTransaction();
+		session.update(toDoData);
+		transaction.commit();
+		return true;
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+		return false;
+	}
+	finally
+	{
+		if(session!=null)
+		{
+			session.close();
+		}
+	}
+	}
+	
 }

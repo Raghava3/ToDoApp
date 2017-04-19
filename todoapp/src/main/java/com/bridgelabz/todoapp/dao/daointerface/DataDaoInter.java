@@ -14,5 +14,5 @@ public interface DataDaoInter
 {
 	public boolean addTitle(ToDoData toDoData);
 	public List<ToDoData> dataList(int id);
-
+    public boolean noteUpdate(ToDoData toDoData);
 }

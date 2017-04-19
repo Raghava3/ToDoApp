@@ -10,8 +10,7 @@ import org.springframework.validation.Validator;
 import com.bridgelabz.todoapp.model.User;
 
 /**
- * @author bridgelabz3 Ragahva 
- * 
+ * @author bridgelabz3 Raghava 
  * this class is RegValidation implements Validator class
  * and overrides validate method 
  *

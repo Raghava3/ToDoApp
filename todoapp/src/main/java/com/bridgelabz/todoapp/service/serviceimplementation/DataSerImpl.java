@@ -21,13 +21,19 @@ public class DataSerImpl implements DataSerInter
 	
 	public boolean addTitle(ToDoData toDoData)
 	{
-	  return dataDaoInter.addTitle(toDoData);
+       return dataDaoInter.addTitle(toDoData);
 	}
 
 	@Override
 	public List<ToDoData> dataList(int id)
 	{
-		return dataDaoInter.dataList(id);
+	   return dataDaoInter.dataList(id);
+	}
+
+	@Override
+	public boolean noteUpdate(ToDoData toDoData) 
+	{
+	   return dataDaoInter.noteUpdate(toDoData);
 	}
 
 }
