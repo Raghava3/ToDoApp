@@ -94,45 +94,39 @@ public class ToDoDataController {
     }
   }
 	
+	/*
+	 *  this is updateNote method 
+	 */
 	
-	@RequestMapping(value="updateNote/{id}",method=RequestMethod.POST)
+	@RequestMapping(value="updateNote/{id}",method=RequestMethod.POST)//takes DATA_ID to update that is updateId
 	public ResponseEntity<String>updateNote(@RequestBody ToDoData toDoData,@PathVariable("id")int updateId,HttpServletRequest 
 			req, HttpServletResponse resp)
 	{
 	
 		HttpSession session=req.getSession();
-		
 		User user = (User) session.getAttribute("user");
-		
-		if(user!=null) //checking that user is logged in or not 
+		if(user!=null)                                           //checking that user is logged in or not 
 		{
-			int id=user.getId();
-			System.out.println("user id "+id);
-			List<ToDoData>	listofdata =dataSerInter.dataList(id);//calling the dataList method 
+			int id=user.getId();                                  //getting the user id who is login 
+			List<ToDoData>	listofdata =dataSerInter.dataList(id);//calling the dataList method   based on id
 		    Iterator<ToDoData> iterator=listofdata.iterator();  //iterating
 		  while(iterator.hasNext())
 		 {
 			ToDoData datafromiterator=(ToDoData) iterator.next();
-			System.out.println("data id is"+datafromiterator.getId());
-			System.out.println("given id"+updateId);
-		if(datafromiterator.getId()==updateId)
+		if(datafromiterator.getId()==updateId)//checking that passed id is existed in the To_Do_Data table
 		{
-			toDoData.setUser(user);
-			toDoData.setId(updateId);
-			if(	dataSerInter.noteUpdate(toDoData))
-			{
-			
+			toDoData.setUser(user); // setting the same user id who is login
+			toDoData.setId(updateId);//DATA_ID should be same so setting the id 
+			if(	dataSerInter.noteUpdate(toDoData)){
 				return new ResponseEntity<String>("status:'sucess',message:'updated'",HttpStatus.OK);
 			}
-			else
-			{
+			else{
 				return new ResponseEntity<String>("status:'failure',message:'data id is not matching'",HttpStatus.BAD_REQUEST);
 			}
-		   }
-	 }
+	     }
+	    }
 				return new ResponseEntity<String>("not valid id",HttpStatus.BAD_REQUEST);
 	 }
-		
 			return new ResponseEntity<String>("not login",HttpStatus.NOT_ACCEPTABLE);
 	}
 }
