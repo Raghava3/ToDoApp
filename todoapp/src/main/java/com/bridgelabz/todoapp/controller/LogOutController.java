@@ -10,14 +10,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+
+
+/**
+ * @author bridgelabz3
+ *This is LogOutController class contain logOut method and returns response entity  
+ */
 @RestController
 public class LogOutController {
 
-	@RequestMapping(value="/logOut",method=RequestMethod.POST)
+	/*
+	 * this is logOut method 
+	 */
+	
+	@RequestMapping(value="/logOut",method=RequestMethod.GET)
 	public ResponseEntity<String> logOut(HttpServletResponse resp, HttpServletRequest req)
 	{
 		HttpSession session=req.getSession();
-		if(session.getAttribute("user")!=null)
+		if(session.getAttribute("user")!=null)      //checks  if session existed or not if session exist then session will be invalidated
 		{
 			session.invalidate();
 			return new ResponseEntity<String>("log out sucess ",HttpStatus.OK);

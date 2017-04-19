@@ -2,6 +2,7 @@ package com.bridgelabz.todoapp.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,19 +33,23 @@ public class RegController
 	private RegValidation regValidation;
 	
  
-
+  /*This method to signup 
+   */
+	
 	@RequestMapping(value="/signUp", method=RequestMethod.POST)
 	public ResponseEntity<String> signUp(@RequestBody User user,BindingResult bindingResult, HttpServletRequest req,HttpServletResponse resp)
 	{
-		regValidation.validate(user, bindingResult);
 		
+		HttpSession session=req.getSession();
+		session.invalidate();                               //doing sessin invalidate otherwise it will add . ask sir 
+		regValidation.validate(user, bindingResult);       //calling validate method 
 		if(bindingResult.hasErrors())
 		{
 			return new ResponseEntity<String>("errors in requried field",HttpStatus.NOT_ACCEPTABLE);
 		}
 		else
 		{
-		 boolean  result=userSerInter.registration(user);
+		 boolean  result=userSerInter.registration(user); //calling registration method
 		
 		 if(result)
 		 {
@@ -54,7 +59,6 @@ public class RegController
 		 {
 			 return new ResponseEntity<String>("{status:'failure !', 'message':'Data not  saved!'}",HttpStatus.NOT_ACCEPTABLE);
 		 }
-	
 		}
 }
 }

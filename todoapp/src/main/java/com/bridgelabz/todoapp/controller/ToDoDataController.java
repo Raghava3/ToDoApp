@@ -41,7 +41,8 @@ public class ToDoDataController {
 
 		HttpSession session = req.getSession();
 		User user = (User) session.getAttribute("user");	// getting the user object from the login contorller
-		if ( session != null)   //if session is null then it will print unauthorized
+	//    System.out.println("user id"+user.getId());
+		if ( user != null)   //if session is null then it will print unauthorized
 		{
 			// setting the user object
 			// have to do logout to add new user
@@ -68,8 +69,6 @@ public class ToDoDataController {
 	@RequestMapping(value="dataList" , method=RequestMethod.GET)
     public ResponseEntity<String> dataList( HttpServletRequest req, HttpServletResponse resp)
 	{
-		
-		
 	
 	HttpSession session=req.getSession();
 	User user = (User) session.getAttribute("user");
@@ -81,23 +80,19 @@ public class ToDoDataController {
 	  while(iterator.hasNext())
 	 {
 		ToDoData datafromiterator=(ToDoData) iterator.next();
-		System.out.println("Note id"+datafromiterator.getId());
-		System.out.println("Title"+datafromiterator.getTitle());
+		System.out.println("Note id    "+datafromiterator.getId());
+		System.out.println("Title      "+datafromiterator.getTitle());
 		System.out.println("Description"+datafromiterator.getDescription());
-		System.out.println("Reminder"+datafromiterator.getReminder());
-        System.out.println("Updated"+datafromiterator.getUpdated());
+		System.out.println("Reminder   "+datafromiterator.getReminder());
+        System.out.println("Updated    "+datafromiterator.getUpdated());
 	 }
 	
 	  return new  ResponseEntity<String>("data retrived",HttpStatus.OK);
 	
 	}
-	return new  ResponseEntity<String>("data retrived",HttpStatus.HTTP_VERSION_NOT_SUPPORTED);
-  }
-
-	
-	/*@RequestMapping(value="/updatedList/{id}",method=RequestMethod.POST)
-	public ResponseEntity<String>updateList(@PathVariable("id")int id,HttpServletRequest req, HttpServletResponse resp)
+	else
 	{
-		
-	}*/
+	return new  ResponseEntity<String>("data not retrived",HttpStatus.UNAUTHORIZED);
+    }
+  }
 }

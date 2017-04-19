@@ -23,26 +23,27 @@ import com.bridgelabz.todoapp.service.serviceinterface.UserSerInter;
  * given by the user, and  it calls login method and returns ResponseEntity Object
  * 
  */
+
 @RestController
 public class LoginController {
 
 	@Autowired
 	UserSerInter userSerInter;
 
+	/*
+	 *  this method is to login validation 
+	 */
+	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<String> login(@RequestBody Map<String, String> loginMap, HttpServletRequest request,
 			HttpServletResponse response) 
 	{
-
-		User user = userSerInter.login(loginMap.get("email"), loginMap.get("password"));
-
-	
+		User user = userSerInter.login(loginMap.get("email"), loginMap.get("password"));//taking user id and password
 		if (user != null)
 		{
-			//if login sucessfull the setting the session 
-			HttpSession session=request.getSession();
-			session.setAttribute("user",user);
-	//		session.invalidate();
+			
+			HttpSession session=request.getSession();//if login sucessfull then setting the session 
+			session.setAttribute("user",user);       //setting session 
 			return new ResponseEntity<String>("{status:'sucess',message='Login sucessfull'}", HttpStatus.ACCEPTED);
 		} 
 		else 
