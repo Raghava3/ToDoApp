@@ -1,6 +1,5 @@
 package com.bridgelabz.todoapp.model;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -12,9 +11,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
+/**
+ * @author bridgelabz3 Raghava
+ * this class is ToDoData, acts as a model for To_Do_Data table
+ */
 @Entity
 @Table(name="To_Do_Data")
 public class ToDoData  
@@ -34,7 +36,7 @@ public class ToDoData
     private Date updated=new Date();
 
     @ManyToOne(cascade=CascadeType.DETACH)
-  //  @JoinColumn(name="USER_ID")
+    @JoinColumn(name="USER_ID")
     private User user;
     
     

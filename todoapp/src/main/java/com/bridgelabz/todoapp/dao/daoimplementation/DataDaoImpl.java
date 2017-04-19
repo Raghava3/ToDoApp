@@ -1,6 +1,5 @@
 package com.bridgelabz.todoapp.dao.daoimplementation;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -14,6 +13,12 @@ import com.bridgelabz.todoapp.dao.daointerface.DataDaoInter;
 import com.bridgelabz.todoapp.model.ToDoData;
 
 
+/**
+ * @author bridgelabz3 Raghava
+ * this class implements DataDaoInter and provide the implementation for methods 
+ * addTitle method returns boolean 
+ * dataList method returns List
+ */
 public class DataDaoImpl implements DataDaoInter
 {
 
@@ -54,7 +59,7 @@ public class DataDaoImpl implements DataDaoInter
 		Transaction transaction=session.beginTransaction();
 		System.out.println("coming1");
 	try{	
-		String hql="from ToDoData where user_id=:id";
+		String hql="from ToDoData where USER_ID=:id";
 		Query query =session.createQuery(hql);
 		query.setParameter("id",id);
 		List<ToDoData> listofdata=query.list();
@@ -63,8 +68,7 @@ public class DataDaoImpl implements DataDaoInter
 		
 		return listofdata;
 	  }
-	catch(Exception e)
-	{
+	catch(Exception e){
 		e.printStackTrace();
 		return null;
 	}
@@ -73,9 +77,6 @@ public class DataDaoImpl implements DataDaoInter
 		{
 			session.close();
 		}
-		
-	}
-		
-	}
-	
+   	}
+  }
 }

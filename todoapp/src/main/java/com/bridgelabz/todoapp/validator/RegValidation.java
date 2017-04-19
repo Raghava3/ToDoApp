@@ -9,6 +9,13 @@ import org.springframework.validation.Validator;
 
 import com.bridgelabz.todoapp.model.User;
 
+/**
+ * @author bridgelabz3 Ragahva 
+ * 
+ * this class is RegValidation implements Validator class
+ * and overrides validate method 
+ *
+ */
 public class RegValidation  implements Validator
 {
 
@@ -21,14 +28,10 @@ public class RegValidation  implements Validator
 	private static String MOBILE_PATTERN="[0-9]{10}";
 	private static String PASSWORD_PATTERN="[a-zA-z0-9]{5,15}";//[a-zA-z0-9]*[@]{5,15}
 	
-	
-	
-
 	public boolean supports(Class<?> arg0) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 	
 	public void validate(Object target, Errors errors) 
 	{
@@ -68,7 +71,6 @@ public class RegValidation  implements Validator
 				errors.rejectValue("mobileNumber","mobile number is required","enter the mobileNumber");
 			}
 		}
-		
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "required password");
 		if(user.getPassword()!=null&& !user.getPassword().isEmpty())

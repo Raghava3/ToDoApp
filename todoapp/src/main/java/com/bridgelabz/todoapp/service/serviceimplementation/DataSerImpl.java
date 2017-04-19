@@ -8,6 +8,12 @@ import com.bridgelabz.todoapp.dao.daointerface.DataDaoInter;
 import com.bridgelabz.todoapp.model.ToDoData;
 import com.bridgelabz.todoapp.service.serviceinterface.DataSerInter;
 
+/**
+ * @author bridgelabz3 Raghava
+ * this class implements DataSerInter interface provides the implementation
+ * addTitle method returns boolean
+ * dataList method returns List
+ */
 public class DataSerImpl implements DataSerInter 
 {
 	@Autowired
