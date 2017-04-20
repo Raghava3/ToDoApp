@@ -2,11 +2,9 @@ package com.bridgelabz.todoapp.controller;
 
 import java.util.Iterator;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.bridgelabz.todoapp.model.ToDoData;
 import com.bridgelabz.todoapp.model.User;
 import com.bridgelabz.todoapp.service.serviceinterface.DataSerInter;
@@ -32,8 +29,9 @@ public class ToDoDataController {
 	@Autowired
 	DataSerInter dataSerInter;
 
-/*	this method is add note in to the database
-*/	
+/*	
+ * this method is add note in to the database if user is login 
+ */	
 	
 	@RequestMapping(value = "/addNote", method = RequestMethod.POST)
 	public ResponseEntity<String> addNote(@RequestBody ToDoData toDoData, HttpServletRequest req,
@@ -63,8 +61,9 @@ public class ToDoDataController {
 	
 	
 	
-/*	this method is to get the list of notes for particular user
-*/
+/*	
+ * this method is to get the list of notes for particular user if he login 
+ */
 	
 	@RequestMapping(value="dataList" , method=RequestMethod.GET)
     public ResponseEntity<String> dataList( HttpServletRequest req, HttpServletResponse resp)
@@ -95,7 +94,7 @@ public class ToDoDataController {
   }
 	
 	/*
-	 *  this is updateNote method 
+	 *  this is method is to update the note based on the user request if he login
 	 */
 	
 	@RequestMapping(value="updateNote/{id}",method=RequestMethod.POST)//takes DATA_ID to update that is updateId
@@ -119,6 +118,42 @@ public class ToDoDataController {
 			toDoData.setId(updateId);//DATA_ID should be same so setting the id 
 			if(	dataSerInter.noteUpdate(toDoData)){
 				return new ResponseEntity<String>("status:'sucess',message:'updated'",HttpStatus.OK);
+			}
+			else{
+				return new ResponseEntity<String>("status:'failure',message:'data id is not matching'",HttpStatus.BAD_REQUEST);
+			}
+	     }
+	    }
+				return new ResponseEntity<String>("not valid id",HttpStatus.BAD_REQUEST);
+	 }
+			return new ResponseEntity<String>("not login",HttpStatus.NOT_ACCEPTABLE);
+	}
+	
+	
+	/*
+	 *  this is method is to delete the note based on the user request if he login
+	 */
+	
+	@RequestMapping(value="noteToDelete/{id}",method=RequestMethod.GET)//takes DATA_ID to update that is updateId
+	public ResponseEntity<String>noteToDelete(@PathVariable("id")int updateId,HttpServletRequest 
+			req, HttpServletResponse resp)
+	{
+	
+		HttpSession session=req.getSession();
+		User user = (User) session.getAttribute("user");
+		if(user!=null)                                           //checking that user is logged in or not 
+		{
+			int id=user.getId();                                  //getting the user id who is login 
+			List<ToDoData>	listofdata =dataSerInter.dataList(id);//calling the dataList method   based on id
+		    Iterator<ToDoData> iterator=listofdata.iterator();  //iterating
+		  while(iterator.hasNext())
+		 {
+			ToDoData datafromiterator=(ToDoData) iterator.next();
+		if(datafromiterator.getId()==updateId)//checking that passed id is existed in the To_Do_Data table
+		{
+			
+			if(	dataSerInter.noteToDelete(updateId)){
+				return new ResponseEntity<String>("status:'sucess',message:'deleted'",HttpStatus.OK);
 			}
 			else{
 				return new ResponseEntity<String>("status:'failure',message:'data id is not matching'",HttpStatus.BAD_REQUEST);

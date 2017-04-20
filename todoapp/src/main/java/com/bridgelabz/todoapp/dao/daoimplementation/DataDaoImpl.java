@@ -103,11 +103,16 @@ public class DataDaoImpl implements DataDaoInter
 
 
 	@Override
-	public boolean noteToDelete(ToDoData toDoData) {
+	public boolean noteToDelete(int  id)
+	{
 		try{
 			Session session=sessionFactory.openSession();
 			Transaction transaction=session.beginTransaction();
-			session.delete(toDoData);
+		//	session.delete(toDoData);
+			String hql="delete from ToDoData where id=:id";
+			Query query=session.createQuery(hql);
+			query.setParameter("id",id);
+			query.executeUpdate();
 			transaction.commit();
 			return true;
 		}
@@ -125,6 +130,5 @@ public class DataDaoImpl implements DataDaoInter
 		}
 	}
 	
-	
-	
+
 }

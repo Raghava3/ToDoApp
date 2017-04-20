@@ -13,5 +13,6 @@ public interface DataSerInter {
 	public boolean addTitle(ToDoData toDoData);
 	public List<ToDoData> dataList(int id);
 	public boolean noteUpdate(ToDoData toDoData); 
+	public boolean noteToDelete(int id);
 
 }

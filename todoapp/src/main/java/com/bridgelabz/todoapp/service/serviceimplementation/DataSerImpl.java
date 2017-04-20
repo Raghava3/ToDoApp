@@ -36,4 +36,10 @@ public class DataSerImpl implements DataSerInter
 	   return dataDaoInter.noteUpdate(toDoData);
 	}
 
+	@Override
+	public boolean noteToDelete(int id)
+	{
+		return dataDaoInter.noteToDelete(id);
+	}
+
 }
