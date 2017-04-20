@@ -9,7 +9,18 @@ import com.bridgelabz.todoapp.model.User;
  */
 public interface UserDaoInter 
 {
+	/**
+	 * stores in to database
+	 * @param user
+	 * @return boolean
+	 */
 	public boolean registration(User user);
+	/**
+	 * retrieve from database
+	 * @param mail
+	 * @param password
+	 * @return User Object
+	 */
 	public User login(String mail, String password);
 
 }
