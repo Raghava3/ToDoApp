@@ -9,14 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.bridgelabz.todoapp.dao.daointerface.UserDaoInter;
 import com.bridgelabz.todoapp.model.User;
 
-
-
-
 /**
- * @author bridgelabz3 Raghava
- * This UserDaoImpl class implements UserDaoInter and provides impementation for unimplemented method
- * registration method returns boolean
- * login method returns user 
+ * @author bridgelabz3 Raghava This UserDaoImpl class implements UserDaoInter
+ *         and provides impementation for unimplemented method registration
+ *         method returns boolean login method returns user
  */
 public class UserDaoImpl implements UserDaoInter {
 
@@ -26,8 +22,7 @@ public class UserDaoImpl implements UserDaoInter {
 	/*
 	 * This is method for user registration
 	 */
-	public boolean registration(User user)
-	{
+	public boolean registration(User user) {
 		Session session = sessionFactory.openSession();
 		Transaction tr = session.beginTransaction();
 		try {
@@ -35,8 +30,7 @@ public class UserDaoImpl implements UserDaoInter {
 			tr.commit();
 			session.close();
 			return true;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
@@ -48,9 +42,9 @@ public class UserDaoImpl implements UserDaoInter {
 		}
 	}
 
-/* 
- * This method for login validation
- */
+	/*
+	 * This method for login validation
+	 */
 	public User login(String mail, String password) {
 
 		Session session = sessionFactory.openSession();

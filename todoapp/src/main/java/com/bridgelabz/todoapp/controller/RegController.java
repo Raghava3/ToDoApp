@@ -31,11 +31,14 @@ public class RegController
 	private UserSerInter userSerInter;
 	@Autowired
 	private RegValidation regValidation;
-	
- 
-  /*This method to signup 
-   */
-	
+	/** 
+	 * Takes the data from user and validate the data if given data is valid then update to database
+	 * @param user
+	 * @param bindingResult
+	 * @param req
+	 * @param resp
+	 * @return String,HttpStatus 
+	 */
 	@RequestMapping(value="/signUp", method=RequestMethod.POST)
 	public ResponseEntity<String> signUp(@RequestBody User user,BindingResult bindingResult, HttpServletRequest req,HttpServletResponse resp)
 	{
@@ -43,20 +46,16 @@ public class RegController
 		HttpSession session=req.getSession();
 		session.invalidate();                               //doing sessin invalidate otherwise it will add . ask sir 
 		regValidation.validate(user, bindingResult);       //calling validate method 
-		if(bindingResult.hasErrors())
-		{
+		if(bindingResult.hasErrors()){
 			return new ResponseEntity<String>("errors in requried field",HttpStatus.NOT_ACCEPTABLE);
 		}
-		else
-		{
+		else{
 		 boolean  result=userSerInter.registration(user); //calling registration method
 		
-		 if(result)
-		 {
+		 if(result){
 			 return new ResponseEntity<String>("{status:'success', 'message':'Data saved!'}", HttpStatus.OK);
 		 }
-		 else
-		 {
+		 else {
 			 return new ResponseEntity<String>("{status:'failure !', 'message':'Data not  saved!'}",HttpStatus.NOT_ACCEPTABLE);
 		 }
 		}

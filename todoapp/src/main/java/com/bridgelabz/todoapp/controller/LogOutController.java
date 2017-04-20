@@ -14,15 +14,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author bridgelabz3
- *This is LogOutController class contain logOut method and returns response entity  
+ *This is LogOutController class contains logOut method and returns response entity<String>  
  */
 @RestController
 public class LogOutController {
 
-	/*
-	 * this is logOut method 
-	 */
 	
+	/**
+	 * checks if user logged in or not.if user logged in then invalidate the session.
+	 * @param resp
+	 * @param req
+	 * @return String,HttpStatus
+	 */
 	@RequestMapping(value="/logOut",method=RequestMethod.GET)
 	public ResponseEntity<String> logOut(HttpServletResponse resp, HttpServletRequest req)
 	{
@@ -32,8 +35,7 @@ public class LogOutController {
 			session.invalidate();
 			return new ResponseEntity<String>("log out sucess ",HttpStatus.OK);
 		}
-		else
-		{
+		else{
 			return new ResponseEntity<String>("please login first  ",HttpStatus.NOT_ACCEPTABLE);
 		}
 	}

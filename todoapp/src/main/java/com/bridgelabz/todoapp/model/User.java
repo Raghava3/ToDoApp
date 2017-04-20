@@ -12,16 +12,14 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-
-
 /**
- * @author bridgelabz3 Raghava This class acts as a  model or POJO for user 
- * it contains fullname,contact number,email and password  
+ * @author bridgelabz3 Raghava This class acts as a model or POJO for user it
+ *         contains fullname,contact number,email and password
  *
  */
 @Entity
-@Table(name="To_Do_User")
-public class User implements Serializable{
+@Table(name = "To_Do_User")
+public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -30,10 +28,9 @@ public class User implements Serializable{
 	private int id;
 
 	private String fullName;
-	private String   mobileNumber;
+	private String mobileNumber;
 	private String email;
 	private String password;
-
 
 	public String getFullName() {
 		return fullName;

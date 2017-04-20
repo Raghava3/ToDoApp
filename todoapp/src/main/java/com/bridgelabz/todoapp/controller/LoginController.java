@@ -30,10 +30,14 @@ public class LoginController {
 	@Autowired
 	UserSerInter userSerInter;
 
-	/*
-	 *  this method is to login validation 
+	/**
+	 * checks for email and password in database.if email and password matches then success status or failure.
+	 * @param loginMap
+	 * @param request
+	 * @param response
+	 * @return String,HttpStatus
+	 *
 	 */
-	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<String> login(@RequestBody Map<String, String> loginMap, HttpServletRequest request,
 			HttpServletResponse response) 
@@ -44,7 +48,7 @@ public class LoginController {
 			
 			HttpSession session=request.getSession();//if login sucessfull then setting the session 
 			session.setAttribute("user",user);       //setting session 
-			return new ResponseEntity<String>("{status:'sucess',message='Login sucessfull'}", HttpStatus.ACCEPTED);
+			return new ResponseEntity<String>("{status:'success',message='Login sucessfull'}", HttpStatus.ACCEPTED);
 		} 
 		else 
 		{

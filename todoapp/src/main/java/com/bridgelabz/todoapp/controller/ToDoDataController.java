@@ -17,7 +17,6 @@ import com.bridgelabz.todoapp.model.ToDoData;
 import com.bridgelabz.todoapp.model.User;
 import com.bridgelabz.todoapp.service.serviceinterface.DataSerInter;
 
-
 /**
  * @author bridgelabz3 Raghava data controller class adding in to the mysql
  *         database getting the session from the login controller and setting
@@ -29,139 +28,146 @@ public class ToDoDataController {
 	@Autowired
 	DataSerInter dataSerInter;
 
-/*	
- * this method is add note in to the database if user is login 
- */	
 	
+	/**
+	 *  first check if logged in or not if logged in then add note. or send failure status
+	 * @param toDoData
+	 * @param req
+	 * @param resp
+	 * @return ResponseEntity
+	 *    
+	 */
 	@RequestMapping(value = "/addNote", method = RequestMethod.POST)
 	public ResponseEntity<String> addNote(@RequestBody ToDoData toDoData, HttpServletRequest req,
-			HttpServletResponse resp) 
-	{
+			HttpServletResponse resp) {
 
 		HttpSession session = req.getSession();
-		User user = (User) session.getAttribute("user");	// getting the user object from the login contorller
-	
-		if ( user != null)                                 //if session is null then it will print unauthorized
+		User user = (User) session.getAttribute("user");//getting the user object from the login contorller
+		if (user != null)                               // if session is null then it will print unauthorized
 		{
-			toDoData.setUser(user);                       // setting the user object so user_id in the data table will automatically added
-			boolean result = dataSerInter.addTitle(toDoData);
+			toDoData.setUser(user);                     // setting the user object so user_id in the
+			boolean result = dataSerInter.addNote(toDoData);
 			if (result) {
-				return new ResponseEntity<String>("sucess", HttpStatus.ACCEPTED);
-			} 
-			 else {
-				return new ResponseEntity<String>("not sucess", HttpStatus.METHOD_NOT_ALLOWED);
-			 }
-		} 
-		
-		else {
-			return new ResponseEntity<String>("status : failure ", HttpStatus.UNAUTHORIZED);
+				return new ResponseEntity<String>("sucess", HttpStatus.ACCEPTED);} 
+			else {
+				return new ResponseEntity<String>("not sucess", HttpStatus.METHOD_NOT_ALLOWED);}
 		}
+		else {
+			return new ResponseEntity<String>("status : failure ", HttpStatus.UNAUTHORIZED);}
+	}
+///////////////////////////////end of method///////////////////////////////////////////////////////////////////////////// 
 
-	}
 	
-	
-	
-/*	
- * this method is to get the list of notes for particular user if he login 
- */
-	
-	@RequestMapping(value="dataList" , method=RequestMethod.GET)
-    public ResponseEntity<String> dataList( HttpServletRequest req, HttpServletResponse resp)
-	{
-	
-	HttpSession session=req.getSession();
-	User user = (User) session.getAttribute("user");
-	if(user!=null) //checking that user is logged in or not 
-	{
-		int id=user.getId();
-		List<ToDoData>	listofdata =dataSerInter.dataList(id);//calling the dataList method 
-	    Iterator<ToDoData> iterator=listofdata.iterator();  //iterating
-	  while(iterator.hasNext())
-	 {
-		ToDoData datafromiterator=(ToDoData) iterator.next();
-		System.out.println("Note id    "+datafromiterator.getId());
-		System.out.println("Title      "+datafromiterator.getTitle());
-		System.out.println("Description"+datafromiterator.getDescription());
-		System.out.println("Reminder   "+datafromiterator.getReminder());
-        System.out.println("Updated    "+datafromiterator.getUpdated());
-	 }
-	
-	  return new  ResponseEntity<String>("data retrived",HttpStatus.OK);
-	}
-	else{
-	return new  ResponseEntity<String>("data not retrived",HttpStatus.UNAUTHORIZED);
-    }
-  }
-	
-	/*
-	 *  this is method is to update the note based on the user request if he login
+	/**
+	 * first check if logged in or not if logged in then show notes added by logged in user. or send failure status 
+	 * @param req
+	 * @param resp
+	 * @return ResponseEntity
+	 *   
 	 */
-	
-	@RequestMapping(value="updateNote/{id}",method=RequestMethod.POST)//takes DATA_ID to update that is updateId
-	public ResponseEntity<String>updateNote(@RequestBody ToDoData toDoData,@PathVariable("id")int updateId,HttpServletRequest 
-			req, HttpServletResponse resp)
-	{
-	
-		HttpSession session=req.getSession();
+	@RequestMapping(value = "listOfNotes", method = RequestMethod.GET)
+	public ResponseEntity<String> dataList(HttpServletRequest req, HttpServletResponse resp) {
+
+		HttpSession session = req.getSession();
 		User user = (User) session.getAttribute("user");
-		if(user!=null)                                           //checking that user is logged in or not 
+		if (user != null)                                             // checking that user is logged in or not
 		{
-			int id=user.getId();                                  //getting the user id who is login 
-			List<ToDoData>	listofdata =dataSerInter.dataList(id);//calling the dataList method   based on id
-		    Iterator<ToDoData> iterator=listofdata.iterator();  //iterating
-		  while(iterator.hasNext())
-		 {
-			ToDoData datafromiterator=(ToDoData) iterator.next();
-		if(datafromiterator.getId()==updateId)//checking that passed id is existed in the To_Do_Data table
-		{
-			toDoData.setUser(user); // setting the same user id who is login
-			toDoData.setId(updateId);//DATA_ID should be same so setting the id 
-			if(	dataSerInter.noteUpdate(toDoData)){
-				return new ResponseEntity<String>("status:'sucess',message:'updated'",HttpStatus.OK);
+			int id = user.getId();
+			List<ToDoData> listofdata = dataSerInter.listOfNotes(id);// calling the dataList method
+			Iterator<ToDoData> iterator = listofdata.iterator();     // iterating
+			while (iterator.hasNext()) {
+				ToDoData datafromiterator = (ToDoData) iterator.next();
+				System.out.println("Note id    " + datafromiterator.getId());
+				System.out.println("Title      " + datafromiterator.getTitle());
+				System.out.println("Description" + datafromiterator.getDescription());
+				System.out.println("Reminder   " + datafromiterator.getReminder());
+				System.out.println("Updated    " + datafromiterator.getUpdated());
 			}
-			else{
-				return new ResponseEntity<String>("status:'failure',message:'data id is not matching'",HttpStatus.BAD_REQUEST);
-			}
-	     }
-	    }
-				return new ResponseEntity<String>("not valid id",HttpStatus.BAD_REQUEST);
-	 }
-			return new ResponseEntity<String>("not login",HttpStatus.NOT_ACCEPTABLE);
+
+			return new ResponseEntity<String>("data retrived", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("data not retrived", HttpStatus.UNAUTHORIZED);
+		}
 	}
+///////////////////////////////end of method///////////////////////////////////////////////////////////////////////////// 
 	
 	
-	/*
-	 *  this is method is to delete the note based on the user request if he login
+
+	/**
+	 *  first check if logged in or not if logged in then update note based on id. or send failure status .
+	 * @param toDoData
+	 * @param updateId
+	 * @param req
+	 * @param resp
+	 * @return ResponseEntity
 	 */
-	
-	@RequestMapping(value="noteToDelete/{id}",method=RequestMethod.GET)//takes DATA_ID to update that is updateId
-	public ResponseEntity<String>noteToDelete(@PathVariable("id")int updateId,HttpServletRequest 
-			req, HttpServletResponse resp)
-	{
-	
-		HttpSession session=req.getSession();
+	@RequestMapping(value = "updateNote/{id}", method = RequestMethod.POST) 
+	public ResponseEntity<String> updateNote(@RequestBody ToDoData toDoData, @PathVariable("id") int updateId,
+			HttpServletRequest req, HttpServletResponse resp) {
+
+		HttpSession session = req.getSession();
 		User user = (User) session.getAttribute("user");
-		if(user!=null)                                           //checking that user is logged in or not 
+		if (user != null)                                            // checking that user is logged in or not
 		{
-			int id=user.getId();                                  //getting the user id who is login 
-			List<ToDoData>	listofdata =dataSerInter.dataList(id);//calling the dataList method   based on id
-		    Iterator<ToDoData> iterator=listofdata.iterator();  //iterating
-		  while(iterator.hasNext())
-		 {
-			ToDoData datafromiterator=(ToDoData) iterator.next();
-		if(datafromiterator.getId()==updateId)//checking that passed id is existed in the To_Do_Data table
+			int id = user.getId();                                   // getting the user id who is login
+			List<ToDoData> listofdata = dataSerInter.listOfNotes(id);// calling the listOfNotes
+			Iterator<ToDoData> iterator = listofdata.iterator();     // iterating
+			while (iterator.hasNext()) {
+				ToDoData datafromiterator = (ToDoData) iterator.next();
+				if (datafromiterator.getId() == updateId)           // checking that passed id is existed in the To_Do_Data
+				{
+					toDoData.setUser(user);                        // setting the same user id who is login
+					toDoData.setId(updateId);                      // DATA_ID should be same so
+					if (dataSerInter.noteUpdate(toDoData)) {
+						return new ResponseEntity<String>("status:'sucess',message:'updated'", HttpStatus.OK);
+					} else {
+						return new ResponseEntity<String>("status:'failure',message:'data id is not matching'",
+								HttpStatus.BAD_REQUEST);
+					}
+				}
+			}
+			return new ResponseEntity<String>("not valid id", HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<String>("not login", HttpStatus.NOT_ACCEPTABLE);
+	}
+///////////////////////////////end of method///////////////////////////////////////////////////////////////////////////// 
+	
+
+	
+	/**
+	 *  first check if logged in or not if logged in then delete note based on id. or send failure status 
+	 * @param updateId
+	 * @param req
+	 * @param resp
+	 * @return ResponseEntity 
+	 */
+	@RequestMapping(value = "noteToDelete/{id}", method = RequestMethod.GET) 
+	public ResponseEntity<String> noteToDelete(@PathVariable("id") int updateId, HttpServletRequest req,
+			HttpServletResponse resp) {
+
+		HttpSession session = req.getSession();
+		User user = (User) session.getAttribute("user");
+		if (user != null)                                            // checking that user is logged in or not
 		{
-			
-			if(	dataSerInter.noteToDelete(updateId)){
-				return new ResponseEntity<String>("status:'sucess',message:'deleted'",HttpStatus.OK);
+			int id = user.getId();                                   // getting the user id who is login
+			List<ToDoData> listofdata = dataSerInter.listOfNotes(id);// calling the dataList method based on id
+			Iterator<ToDoData> iterator = listofdata.iterator();     // iterating
+			while (iterator.hasNext()) {
+				ToDoData datafromiterator = (ToDoData) iterator.next();
+				if (datafromiterator.getId() == updateId)            // checking that passed id is existed in the To_Do_Data table
+				{
+
+					if (dataSerInter.noteToDelete(updateId)) {
+						return new ResponseEntity<String>("status:'sucess',message:'deleted'", HttpStatus.OK);
+					} else {
+						return new ResponseEntity<String>("status:'failure',message:'data id is not matching'",
+								HttpStatus.BAD_REQUEST);
+					}
+				}
 			}
-			else{
-				return new ResponseEntity<String>("status:'failure',message:'data id is not matching'",HttpStatus.BAD_REQUEST);
-			}
-	     }
-	    }
-				return new ResponseEntity<String>("not valid id",HttpStatus.BAD_REQUEST);
-	 }
-			return new ResponseEntity<String>("not login",HttpStatus.NOT_ACCEPTABLE);
+			return new ResponseEntity<String>("not valid id", HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<String>("not login", HttpStatus.NOT_ACCEPTABLE);
 	}
 }
+/////////////////////////////end of method//////////////////////////////////////////////////////////////////
