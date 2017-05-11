@@ -23,7 +23,7 @@ public class RegValidation  implements Validator
 	
 	private static String EMAIL_PATTERN="^[A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"+
 	                                      "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-	private static String STRING_PATTERN="[a-zA-Z]+";
+	private static String STRING_PATTERN="((?i)[a-z]+(\\s+[a-z]+)*)";
 	private static String MOBILE_PATTERN="[0-9]{10}";
 	private static String PASSWORD_PATTERN="[a-zA-z0-9]{5,15}";//[a-zA-z0-9]*[@]{5,15}
 	

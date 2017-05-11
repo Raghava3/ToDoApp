@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgelabz.todoapp.model.User;
 import com.bridgelabz.todoapp.service.serviceinterface.UserSerInter;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
  * @author bridgelabz3 Raghava
@@ -36,24 +39,41 @@ public class LoginController {
 	 * @param request
 	 * @param response
 	 * @return String,HttpStatus
+	 * @throws JsonProcessingException 
 	 *
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<String> login(@RequestBody Map<String, String> loginMap, HttpServletRequest request,
-			HttpServletResponse response) 
+			HttpServletResponse response) throws JsonProcessingException 
 	{
 		User user = userSerInter.login(loginMap.get("email"), loginMap.get("password"));//taking user id and password
 		if (user != null)
 		{
 			System.out.println("inside login");
 			HttpSession session=request.getSession();//if login sucessfull then setting the session 
-			session.setAttribute("user",user);       //setting session 
-			return new ResponseEntity<String>("{data:'1'}", HttpStatus.ACCEPTED);
+			session.setAttribute("user",user); //setting session 
+		 
+			ObjectMapper mapper=new ObjectMapper();
+			ObjectNode root=mapper.createObjectNode();
+			  root.put("status","sucess");
+			
+			  String data=mapper.writeValueAsString(root);
+			
+			return new ResponseEntity<String>(data,HttpStatus.OK);
 		} 
 		else  
 		{
-			return new ResponseEntity<String>("{data:'2',message='invalid creadentials'}",
-					HttpStatus.NOT_ACCEPTABLE);
+			
+			HttpSession session=request.getSession();//if login sucessfull then setting the session 
+			session.setAttribute("user",user); //setting session 
+		 
+			ObjectMapper mapper=new ObjectMapper();
+			ObjectNode root=mapper.createObjectNode();
+			  root.put("status","failure");
+			
+			  String data=mapper.writeValueAsString(root);
+			
+			return new ResponseEntity<String>(data,HttpStatus.NOT_ACCEPTABLE);
 		}
 	}
 }
