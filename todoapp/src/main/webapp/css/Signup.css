@@ -1,0 +1,55 @@
+sbody{
+   background-color:#41474B;
+   background-repeat: no-repeat;
+   background-size: cover;
+  }
+    .saa
+    {
+      width: 400px;
+      height:320px;
+      background-color:rgba(0,0,0,0.5);
+      margin:0 auto;
+      margin-top: 160px;
+      padding-top: 10px;
+      padding-left: 5px;
+      border-radius: 5px;
+
+    }
+   .sbb {
+	width: fit;
+	height: 65px;
+	background-color: rgba(0, 0, 0, 0.9);
+	margin-left:0px;
+	margin-top: 0px;
+	padding-top: 10px;
+	padding-left: 10px;
+	
+}
+    
+       .scc
+    {
+    
+      width: 	fit;
+      height:40px;
+      background-color:rgba(0,0,0,0.9);
+      margin:0 auto;
+      margin-top: 30px;
+      padding-top:10px;
+      padding-left: 10px;
+      border-radius: 0px;
+    
+    }
+    .ssignupbutton {
+   background-color: #007951;
+    border: none;
+    color: white;
+    padding: 7px 42px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    margin: 5px 2px;
+    cursor: pointer;
+    margin-left: 36%;
+    margin-bottom: 46px;
+}

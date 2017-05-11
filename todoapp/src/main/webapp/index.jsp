@@ -1,5 +1,35 @@
+
 <html>
-<body>
-<h2>Hello World!</h2>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="bower_components/angular/angular.min.js" type="text/javascript" ></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js" type="text/javascript"></script>
+<script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+
+<script src="js/app.js" type="text/javascript"></script>
+
+<!-- this is for script -->
+<!--
+
+
+<!-- this is for css -->
+<link rel="stylesheet" href="css/Login.css">
+<link rel="stylesheet" href="css/Signup.css">
+
+
+<title>ToDoApp</title>
+</head>
+
+<body >
+<div data-ng-app="todoapp" >
+	<ui-view></ui-view>
+	</div>
 </body>
+<script src="js/controller/LoginController.js" type="text/javascript"></script>
+<script src="js/controller/SignUpController.js" type="text/javascript"></script>
+
+<!--  <script src="js/Login.js" type="text/javascript"></script> -->
+<script src="js/Signup.js" type="text/javascript"></script> 
+
+
 </html>

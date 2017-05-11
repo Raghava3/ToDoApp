@@ -45,14 +45,14 @@ public class LoginController {
 		User user = userSerInter.login(loginMap.get("email"), loginMap.get("password"));//taking user id and password
 		if (user != null)
 		{
-			
+			System.out.println("inside login");
 			HttpSession session=request.getSession();//if login sucessfull then setting the session 
 			session.setAttribute("user",user);       //setting session 
-			return new ResponseEntity<String>("{status:'success',message='Login sucessfull'}", HttpStatus.ACCEPTED);
+			return new ResponseEntity<String>("{data:'1'}", HttpStatus.ACCEPTED);
 		} 
-		else 
+		else  
 		{
-			return new ResponseEntity<String>("{status:'failure',message='invalid creadentials'}",
+			return new ResponseEntity<String>("{data:'2',message='invalid creadentials'}",
 					HttpStatus.NOT_ACCEPTABLE);
 		}
 	}

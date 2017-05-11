@@ -5,6 +5,12 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/" source-path="/src"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp/css"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp/js"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp/WEB-INF/jsp"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp/bower_components"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp/service"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp/html"/>
         <property name="context-root" value="todoapp"/>
         <property name="java-output-path" value="/todoapp/target/classes"/>
     </wb-module>

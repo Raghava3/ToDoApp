@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bridgelabz.todoapp.model.User;
 import com.bridgelabz.todoapp.service.serviceinterface.UserSerInter;
 import com.bridgelabz.todoapp.validator.RegValidation;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
  * @author bridgelabz3 Raghava
@@ -38,25 +41,49 @@ public class RegController
 	 * @param req
 	 * @param resp
 	 * @return String,HttpStatus 
+	 * @throws JsonProcessingException 
 	 */
 	@RequestMapping(value="/signUp", method=RequestMethod.POST)
-	public ResponseEntity<String> signUp(@RequestBody User user,BindingResult bindingResult, HttpServletRequest req,HttpServletResponse resp)
+	public ResponseEntity<String> signUp(@RequestBody User user,BindingResult bindingResult, HttpServletRequest req,HttpServletResponse resp) throws JsonProcessingException
 	{
+		System.out.println("inside signup");
 		
 		HttpSession session=req.getSession();
 		session.invalidate();                               //doing sessin invalidate otherwise it will add . ask sir 
 		regValidation.validate(user, bindingResult);       //calling validate method 
 		if(bindingResult.hasErrors()){
-			return new ResponseEntity<String>("errors in requried field",HttpStatus.NOT_ACCEPTABLE);
+			
+			
+			ObjectMapper mapper=new ObjectMapper();
+			ObjectNode root=mapper.createObjectNode();
+			
+			root.put("status", "alredy user is there");
+			
+			String data=mapper.writeValueAsString(root);
+			
+			
+			return new ResponseEntity<String>(data,HttpStatus.NOT_ACCEPTABLE);
 		}
 		else{
 		 boolean  result=userSerInter.registration(user); //calling registration method
 		
 		 if(result){
-			 return new ResponseEntity<String>("{status:'success', 'message':'Data saved!'}", HttpStatus.OK);
+			ObjectMapper mapper=new ObjectMapper();
+			ObjectNode root=mapper.createObjectNode();
+			root.put("status","sucess");
+			String data=mapper.writeValueAsString(root);
+			
+			
+			return new ResponseEntity<String>(data, HttpStatus.OK);
 		 }
 		 else {
-			 return new ResponseEntity<String>("{status:'failure !', 'message':'Data not  saved!'}",HttpStatus.NOT_ACCEPTABLE);
+			 
+			    ObjectMapper mapper=new ObjectMapper();
+				ObjectNode root=mapper.createObjectNode();
+				root.put("status", "error");
+				String data=mapper.writeValueAsString(root);
+				return new ResponseEntity<String>(data,HttpStatus.NOT_ACCEPTABLE);
+			 
 		 }
 		}
 }

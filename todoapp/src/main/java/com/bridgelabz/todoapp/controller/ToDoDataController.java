@@ -27,7 +27,6 @@ public class ToDoDataController {
 
 	@Autowired
 	DataSerInter dataSerInter;
-
 	
 	/**
 	 *  first check if logged in or not if logged in then add note. or send failure status
@@ -48,9 +47,9 @@ public class ToDoDataController {
 			toDoData.setUser(user);                     // setting the user object so user_id in the
 			boolean result = dataSerInter.addNote(toDoData);
 			if (result) {
-				return new ResponseEntity<String>("sucess", HttpStatus.ACCEPTED);} 
+				return new ResponseEntity<String>("{status:'success', todo:{'id':" + toDoData.getId() +" }}", HttpStatus.ACCEPTED);} 
 			else {
-				return new ResponseEntity<String>("not sucess", HttpStatus.METHOD_NOT_ALLOWED);}
+				return new ResponseEntity<String>("{'status':'failed'}", HttpStatus.METHOD_NOT_ALLOWED);}
 		}
 		else {
 			return new ResponseEntity<String>("status : failure ", HttpStatus.UNAUTHORIZED);}
@@ -62,7 +61,7 @@ public class ToDoDataController {
 	 * first check if logged in or not if logged in then show notes added by logged in user. or send failure status 
 	 * @param req
 	 * @param resp
-	 * @return ResponseEntity
+	 * @return string,HttpStatus
 	 *   
 	 */
 	@RequestMapping(value = "listOfNotes", method = RequestMethod.GET)

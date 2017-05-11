@@ -26,6 +26,7 @@ public class DataDaoImpl implements DataDaoInter {
 	Transaction transaction;
 
 
+	@Override
 	public boolean addNote(ToDoData toDoData)
 
 	{
@@ -34,7 +35,6 @@ public class DataDaoImpl implements DataDaoInter {
 		try {
 			session.save(toDoData);
 			transaction.commit();
-			session.close();
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
