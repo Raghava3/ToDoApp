@@ -3,19 +3,19 @@ var myApp = angular.module('todoapp', ['ui.router'])
   
   $stateProvider
  
-  .state("login",{
+  .state('Login',{
     url:"/Login",
     templateUrl:"html/Login.html",
     controller:"LoginController"
   })
   
-  .state("signUp",{
+  .state('signUp',{
     url:"/signUp",
     templateUrl:"html/Signup.html",
     controller:"SignUpController"
   })
   
-    .state("Home",{
+    .state('Home',{
 	    url:"/Home",
 	    templateUrl:"html/Home.html",
 	    controller:"HomeController"

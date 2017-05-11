@@ -15,20 +15,19 @@
 <!-- this is for css -->
 <link rel="stylesheet" href="css/Login.css">
 <link rel="stylesheet" href="css/Signup.css">
-
+<link rel="stylesheet" href="css/HomePage.css">
 
 <title>ToDoApp</title>
 </head>
 
-<body >
-<div data-ng-app="todoapp" >
+<body>
+     <div data-ng-app="todoapp">
 	<ui-view></ui-view>
 	</div>
 </body>
 <script src="js/controller/LoginController.js" type="text/javascript"></script>
 <script src="js/controller/SignUpController.js" type="text/javascript"></script>
 
-<!--  <script src="js/Login.js" type="text/javascript"></script> -->
 <script src="js/Signup.js" type="text/javascript"></script> 
 
 
