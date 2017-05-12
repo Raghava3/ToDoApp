@@ -4,37 +4,61 @@
 
 
 
-<div  style="margin-left:-10px;margin-top:-6px;margin-right:-10px;" data-ng-controller="LoginController as lc">
-	<div class="lbb">
-		<font color="white"><center>
-				<b>
-					<h1>ToDo</h1>
-				</b>
-			</center></font>
+
+<!-- <div id="bridgelabz">BRIDGELABZ</div>
+<div id="centerdiv" data-ng-controller="LoginController as lc">
+<div id="todo"><font color="blue"><b>ToDo</b></font></div>
+	<div id="logindiv">
+	<form name="myForm">
+	<table>
+	<tr> <td>email:</td>
+	<td><input type="email" id="form_email" name="email" placeholder="email"data-ng-model="email" required></td></tr>
+	<p>    <span style="color:red" ng-show="myForm.email.$dirty && myForm.email.$invalid">
+        <span ng-show="myForm.email.$error.required">Email is required.</span>
+        <span ng-show="myForm.email.$error.email">Invalid email address.</span>
+</span>
+</p> 
+	 <tr><td>password:</td>
+	 <td><input type="password" id="form_password" name="password" placeholder="password"data-ng-model="password"> </td> 
+     </tr>		
+    </table>
+    <pre>
+          <input class="lbutton" type="submit" value="login" data-ng-click="login()">
+	</pre>
+	
+	</form>
 	</div>
-	</div>
+	<div id="signupdiv">
 	<pre>
-<div class="lpbg">
-<form >
- <font color="white"><b>      email:</b></font><input type="text"id="form_email" name="email" placeholder="email" data-ng-model="email">
- <font color="red">  <i><span class="error_form"id="email_error_message"></span></i></font>
- <font color="white"><b>   password:</b></font><input type="password" id="form_password" name="password" placeholder="password" data-ng-model="password">
- <font color="red">  <i><span class="error_form" id="password_error_message"></span></i></font>
-                <input  class="lbutton"	 type="submit" value="login"  data-ng-click="login()"> 
-                 
-               
-                 
-</form>
-        
+	  <a data-ui-sref="signUp" class="lsignupbutton">signup</a>
+	</pre>
+	</div>
 </div>
- <pre>
-                 <a data-ui-sref="signUp" class="lsignupbutton">signup</a>
-		</pre>
+ -->
 
-</pre>
+
+<div id="bridgelabz"><font color="blue">BRIDGELABZ</font></div>
+<div id="makenote"><font style="font-size:36px;"color:white">Make a note</font></div>
+<div id="centerdiv" data-ng-controller="LoginController as lc">
+<div id="todo"><font color="blue"><b>ToDo</b></font></div>
+	<div id="logindiv">
+	<form name="myForm">
+	<pre>
+      email:<input type="email" id="form_email" name="email" placeholder="enter email-id"data-ng-model="email" required>
+   <span style="color:red" ng-show="myForm.email.$dirty && myForm.email.$invalid"><span ng-show="myForm.email.$error.required">Email is required.</span><span ng-show="myForm.email.$error.email">Invalid email address.</span></span>
+   password:<input type="password" id="form_password" name="password" placeholder="password"data-ng-model="password">		
+    
+           <input class="lbutton" type="submit" value="login" data-ng-click="login()">
+	</pre>
+	
+	</form>
+	</div>
+	<div id="signupdiv">
+	<pre>
+	   <a data-ui-sref="signUp" class="lsignupbutton">signup</a>
+	</pre>
+	</div>
 </div>
-
-
 
 
 
