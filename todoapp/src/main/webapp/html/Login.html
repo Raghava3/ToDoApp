@@ -37,16 +37,16 @@
  -->
 
 
-<div id="bridgelabz"><font color="blue">BRIDGELABZ</font></div>
-<div id="makenote"><font style="font-size:36px;"color:white">Make a note</font></div>
+<div id="bridgelabz"><font color="#076cab">BRIDGELABZ</font></div>
+<div id="makenote"><font style="font-size:36px;"color:white">Make a Note</font></div>
 <div id="centerdiv" data-ng-controller="LoginController as lc">
-<div id="todo"><font color="blue"><b>ToDo</b></font></div>
+<div id="todo"><font color="white"><b>ToDo</b></font></div>
 	<div id="logindiv">
 	<form name="myForm">
 	<pre>
-      email:<input type="email" id="form_email" name="email" placeholder="enter email-id"data-ng-model="email" required>
+ <font color="#043e62"><b>   email:</b></font><input type="email" id="form_email" name="email" placeholder="enter email-id"data-ng-model="email" required>
    <span style="color:red" ng-show="myForm.email.$dirty && myForm.email.$invalid"><span ng-show="myForm.email.$error.required">Email is required.</span><span ng-show="myForm.email.$error.email">Invalid email address.</span></span>
-   password:<input type="password" id="form_password" name="password" placeholder="password"data-ng-model="password">		
+ <font color="#043e62"><b>password:</b></font><input type="password" id="form_password" name="password" placeholder="password"data-ng-model="password">		
     
            <input class="lbutton" type="submit" value="login" data-ng-click="login()">
 	</pre>

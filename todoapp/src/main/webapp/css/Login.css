@@ -72,7 +72,7 @@ body {
 }
 	#centerdiv {
 	width: 457PX;
-	height: 450px;
+	height: 400px;
 	background-color: white;/* rgba(255, 255, 255,0.9); */
 	margin: 0 auto;
 	margin-top: 50px;
@@ -82,9 +82,9 @@ body {
 }
 
 #todo {
-	width: 217px;
-    height: 50px;
-    background-color: white;
+	width: 256px;
+    height: 40px;
+    background-color:#043e62 ;
     padding-left: 44%;
     padding-top: 33px;
 }
@@ -102,7 +102,7 @@ body {
 	margin-top: 32px; 
 }
 .lbutton {
-    background-color: #043e62 ;
+    background-color: #076cab ;
     border: none;
     color: white;
     padding: 7px 42px;
@@ -115,7 +115,7 @@ body {
     margin-left: -0.5px;
 }
 .lsignupbutton {
-   background-color: #043e62;
+   background-color: #076cab;
     border: none;
     color: white;
     padding: 7px 31px;
@@ -129,4 +129,14 @@ body {
     margin-bottom: 46px;
     margin-top:33px;
 } 
+#form_email
+{
+	width:170px;
+	height:30px;
+}
+#form_password
+{
+	width:170px;
+	height:30px;
+}
 	
