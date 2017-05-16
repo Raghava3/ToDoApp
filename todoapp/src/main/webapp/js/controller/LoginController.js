@@ -1,7 +1,9 @@
 myApp.controller("LoginController",function ($scope,  $state, loginService ) {	
 	
 	
+	
      	$scope.login = function () {
+     		
 		var user = {};
 		user.email=$scope.email;
 		user.password=$scope.password;
@@ -10,7 +12,8 @@ myApp.controller("LoginController",function ($scope,  $state, loginService ) {
 			console.log(data)
 			console.log(data.status);
 			if( data.status=="200"){
-					$state.go("Home");
+					$state.go("home");
+					console.log("sdfasdf"); 
 			}
 			else
 			{

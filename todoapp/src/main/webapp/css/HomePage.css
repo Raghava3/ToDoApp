@@ -247,7 +247,7 @@ width: 28%;
 
 
 
- #header
+ /* #header
  {
     background-color: #043e62;
     margin-left: -8px;
@@ -255,36 +255,43 @@ width: 28%;
     margin-top: -8px;
     position: inherit;
     height: 65px;
- }
+    width:fit;
+    padding-top: 6px;
+    padding-bo #660000ttom:2px;
+ } */
 	
 	
 #opennav
 {
 	margin-top: 8px;
-    width: 24px;
+    width: 4%;
     height: 33px;
-    padding-top: 10px;
-    padding-left: 22px;
-
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 4px;
+    padding-right: 8px;
+    margin-left: 17px;
+   -webkit-box-align: center;
 }
 #todoprint
 {
-    margin-top: -33px;
-    width: 100px;
-    height: 33px;
+   
+    width: 18%;
+    height: 33px; 
     padding-top: 0px;
     padding-left: 50px;
     margin-left: 63px;
-
+    -webkit-box-align: center;
 }
 #todosearch
 {
    margin-top: -30px;
-    width: 463px;
+    width: 46px;
     height: 35px;
     padding-top: 0px;
     padding-left: 0px;
     margin-left: 320px;
+   background-color: white;
 }
 #todorefresh
 {
@@ -293,9 +300,25 @@ width: 28%;
     height: 33px;
     padding-top: 0px;
     padding-left: 0;
-    margin-left: 62%;
+    margin-left: 500%;
+    background-color: black;
     
 }
 
+#takeanote
+{
+	width:250px;
+	height:50px;
+	background-color:white;
+	margin-left: 32%;
+}
 
-
+#header
+{
+	background-color: #ffaa00;/* #0d0d0d */;
+	border: none;
+}
+#search
+{
+	padding-left:0px;
+}

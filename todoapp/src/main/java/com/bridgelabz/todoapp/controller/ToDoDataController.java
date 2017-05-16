@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bridgelabz.todoapp.model.ToDoData;
 import com.bridgelabz.todoapp.model.User;
 import com.bridgelabz.todoapp.service.serviceinterface.DataSerInter;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
  * @author bridgelabz3 Raghava data controller class adding in to the mysql
@@ -44,7 +48,7 @@ public class ToDoDataController {
 		User user = (User) session.getAttribute("user");//getting the user object from the login contorller
 		if (user != null)                               // if session is null then it will print unauthorized
 		{
-			toDoData.setUser(user);                     // setting the user object so user_id in the
+			//toDoData.setUser(user);                     // setting the user object so user_id in the
 			boolean result = dataSerInter.addNote(toDoData);
 			if (result) {
 				return new ResponseEntity<String>("{status:'success', todo:{'id':" + toDoData.getId() +" }}", HttpStatus.ACCEPTED);} 
@@ -57,35 +61,44 @@ public class ToDoDataController {
 ///////////////////////////////end of method///////////////////////////////////////////////////////////////////////////// 
 
 	
+	@SuppressWarnings("deprecation")
 	/**
 	 * first check if logged in or not if logged in then show notes added by logged in user. or send failure status 
 	 * @param req
 	 * @param resp
 	 * @return string,HttpStatus
+	 * @throws JsonProcessingException 
 	 *   
 	 */
 	@RequestMapping(value = "listOfNotes", method = RequestMethod.GET)
-	public ResponseEntity<String> dataList(HttpServletRequest req, HttpServletResponse resp) {
+	public ResponseEntity<String> dataList(HttpServletRequest req, HttpServletResponse resp) throws JsonProcessingException {
 
 		HttpSession session = req.getSession();
 		User user = (User) session.getAttribute("user");
 		if (user != null)                                             // checking that user is logged in or not
 		{
+			System.out.println("coming");
 			int id = user.getId();
 			List<ToDoData> listofdata = dataSerInter.listOfNotes(id);// calling the dataList method
 			Iterator<ToDoData> iterator = listofdata.iterator();     // iterating
-			while (iterator.hasNext()) {
-				ToDoData datafromiterator = (ToDoData) iterator.next();
-				System.out.println("Note id    " + datafromiterator.getId());
-				System.out.println("Title      " + datafromiterator.getTitle());
-				System.out.println("Description" + datafromiterator.getDescription());
-				System.out.println("Reminder   " + datafromiterator.getReminder());
-				System.out.println("Updated    " + datafromiterator.getUpdated());
-			}
-
-			return new ResponseEntity<String>("data retrived", HttpStatus.OK);
-		} else {
-			return new ResponseEntity<String>("data not retrived", HttpStatus.UNAUTHORIZED);
+			
+			ObjectMapper mapper=new ObjectMapper();
+			JsonNode node = mapper.valueToTree(listofdata);
+			//System.out.println("node"+node.toString());
+			ObjectNode root=mapper.createObjectNode();
+			  root.put("listofnotes",node);
+			 System.out.println("inside listofnotes");
+			  String data=mapper.writeValueAsString(root);
+			 // System.out.println("data"+listofdata.toString());
+			return new ResponseEntity<String>(data, HttpStatus.OK);
+		}
+		else 
+		{
+			ObjectMapper mapper=new ObjectMapper();
+			ObjectNode root=mapper.createObjectNode();
+			  root.put("status", "failure");
+	     String data=mapper.writeValueAsString(root);
+			  return new ResponseEntity<String>(data, HttpStatus.UNAUTHORIZED);
 		}
 	}
 ///////////////////////////////end of method///////////////////////////////////////////////////////////////////////////// 

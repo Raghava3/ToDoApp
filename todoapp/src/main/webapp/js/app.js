@@ -15,12 +15,14 @@ var myApp = angular.module('todoapp', ['ui.router'])
     controller:"SignUpController"
   })
   
-    .state('Home',{
-	    url:"/Home",
+    .state('home',{
+	    url:"/home",
 	    templateUrl:"html/Home.html",
 	    controller:"HomeController"
 	  })
   
+	  
+	  
   $urlRouterProvider.otherwise('/Login');
 
 });
