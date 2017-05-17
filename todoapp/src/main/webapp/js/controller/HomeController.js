@@ -4,7 +4,7 @@ myApp.controller("HomeController",function ($scope,  $state, homeService,dataSer
 	console.log("Inside controller");
 	  var httpObje=homeService.listOfNote();
 	  httpObje.then(function (data)
-	  {  console.log("inside http...");
+	  {  console.log("inside method");
 		  $scope.task=data.data.listofnotes;
 		  console.log(data);
 	  })
@@ -15,13 +15,25 @@ myApp.controller("HomeController",function ($scope,  $state, homeService,dataSer
 	var toDoData = {};
 	toDoData.title=$scope.title;
 	toDoData.description=$scope.description;
-	var httpObje=toDoData.addNote(toDoData);
+	// $scope.task.push("toDoData");
+	var httpObje=dataService.addNote(toDoData);
 	httpObje.then(function (data) {
 		console.log(data)
 		console.log(data.status);
-		if( data.status=="200"){
-				$state.go("home");
-				console.log("sdfasdf"); 
+		if( data.status=="200"){	
+			var httpObje=homeService.listOfNote();
+			httpObje.then(function (data)
+					  {  console.log("inside method");
+						  $scope.task=data.data.listofnotes;
+						  console.log(data);
+					
+					  })
+		    if(true)
+		    	{
+		    	console.log("inside n")
+		    	$state.go("home");
+		    	}
+		  console.log("salman"); 
 		}
 		else
 		{
@@ -47,7 +59,7 @@ myApp.service("homeService",function ($http) {
 	console.log("inside home service");
 	this.listOfNote = function()
 	{ 
-		console.log("inside  method")
+		console.log("inside  method");
 		return $http
 		({
 			url:"http://localhost:8012/todoapp/listOfNotes",
@@ -59,13 +71,15 @@ myApp.service("homeService",function ($http) {
 
 
 myApp.service("dataService",function ($http) {
-	this.addNote = function()
+	console.log("inside dataservice")
+	this.addNote = function(toDoData)
 	{ 
+		console.log("inside add method");
 		return $http
 		({
 			url:"http://localhost:8012/todoapp/addNote",
 			method:"post",
-			
+			data:toDoData
 		});
 	}
 });

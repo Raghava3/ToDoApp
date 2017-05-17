@@ -38,25 +38,40 @@ public class ToDoDataController {
 	 * @param req
 	 * @param resp
 	 * @return ResponseEntity
+	 * @throws JsonProcessingException 
 	 *    
 	 */
-	@RequestMapping(value = "/addNote", method = RequestMethod.POST)
+	@RequestMapping(value = "addNote", method = RequestMethod.POST)
 	public ResponseEntity<String> addNote(@RequestBody ToDoData toDoData, HttpServletRequest req,
-			HttpServletResponse resp) {
+			HttpServletResponse resp) throws JsonProcessingException {
 
 		HttpSession session = req.getSession();
 		User user = (User) session.getAttribute("user");//getting the user object from the login contorller
 		if (user != null)                               // if session is null then it will print unauthorized
 		{
-			//toDoData.setUser(user);                     // setting the user object so user_id in the
+			toDoData.setUser(user);                     // setting the user object so user_id in the
 			boolean result = dataSerInter.addNote(toDoData);
 			if (result) {
-				return new ResponseEntity<String>("{status:'success', todo:{'id':" + toDoData.getId() +" }}", HttpStatus.ACCEPTED);} 
+				ObjectMapper mapper=new ObjectMapper();
+				ObjectNode root=mapper.createObjectNode();
+				root.put("status", "sucess");
+				String data=mapper.writeValueAsString(root);
+				return new ResponseEntity<String>(data, HttpStatus.OK);} 
 			else {
-				return new ResponseEntity<String>("{'status':'failed'}", HttpStatus.METHOD_NOT_ALLOWED);}
+				
+				ObjectMapper  mapper=new ObjectMapper();
+				ObjectNode root=mapper.createObjectNode();
+				root.put("status", "failure");
+				String data=mapper.writeValueAsString(root);
+				return new ResponseEntity<String>(data, HttpStatus.METHOD_NOT_ALLOWED);}
 		}
 		else {
-			return new ResponseEntity<String>("status : failure ", HttpStatus.UNAUTHORIZED);}
+			
+			ObjectMapper mapper=new ObjectMapper();
+			ObjectNode root=mapper.createObjectNode();
+			root.put("status", "failure");
+			String data=mapper.writeValueAsString(root);
+			return new ResponseEntity<String>(data, HttpStatus.UNAUTHORIZED);}
 	}
 ///////////////////////////////end of method///////////////////////////////////////////////////////////////////////////// 
 
@@ -80,8 +95,8 @@ public class ToDoDataController {
 			System.out.println("coming");
 			int id = user.getId();
 			List<ToDoData> listofdata = dataSerInter.listOfNotes(id);// calling the dataList method
-			Iterator<ToDoData> iterator = listofdata.iterator();     // iterating
-			
+/*			Iterator<ToDoData> iterator = listofdata.iterator();     // iterating
+*/			
 			ObjectMapper mapper=new ObjectMapper();
 			JsonNode node = mapper.valueToTree(listofdata);
 			//System.out.println("node"+node.toString());
