@@ -42,7 +42,7 @@ public class LoginController {
 	 * @throws JsonProcessingException 
 	 *
 	 */
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public ResponseEntity<String> login(@RequestBody Map<String, String> loginMap, HttpServletRequest request,
 			HttpServletResponse response) throws JsonProcessingException 
 	{

@@ -27,8 +27,9 @@ myApp.controller("LoginController",function ($scope,  $state, loginService ) {
 
 myApp.service("loginService",function ($http) {
 	this.login = function(user){ 
+		console.log("calling login service");
 		return $http({
-			url:"http://localhost:8012/todoapp/login",
+			url:"http://localhost:8030/todoapp/login",
 			method:"post",
 			data:user
 		});

@@ -35,7 +35,7 @@ myApp.controller("SignUpController",function ($scope,  $state, signUpService ,si
 myApp.service("signUpService",function ($http) {
 	this.signUp = function(user){ 
 		return $http({
-			url:"http://localhost:8012/todoapp/signUp",
+			url:"http://localhost:8030/todoapp/signUp",
 			method:"post",
 			data:user
 		});
