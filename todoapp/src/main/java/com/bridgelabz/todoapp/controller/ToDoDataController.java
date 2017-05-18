@@ -45,6 +45,8 @@ public class ToDoDataController {
 	public ResponseEntity<String> addNote(@RequestBody ToDoData toDoData, HttpServletRequest req,
 			HttpServletResponse resp) throws JsonProcessingException {
 
+		System.out.println("coming inside the add method");
+		
 		HttpSession session = req.getSession();
 		User user = (User) session.getAttribute("user");//getting the user object from the login contorller
 		if (user != null)                               // if session is null then it will print unauthorized
@@ -55,6 +57,7 @@ public class ToDoDataController {
 				ObjectMapper mapper=new ObjectMapper();
 				ObjectNode root=mapper.createObjectNode();
 				root.put("status", "sucess");
+				root.putPOJO("todo", toDoData);
 				String data=mapper.writeValueAsString(root);
 				return new ResponseEntity<String>(data, HttpStatus.OK);} 
 			else {
@@ -145,7 +148,8 @@ public class ToDoDataController {
 				{
 					toDoData.setUser(user);                        // setting the same user id who is login
 					toDoData.setId(updateId);                      // DATA_ID should be same so
-					if (dataSerInter.noteUpdate(toDoData)) {
+					if (dataSerInter.noteUpdate(toDoData))
+					{
 						return new ResponseEntity<String>("status:'sucess',message:'updated'", HttpStatus.OK);
 					} else {
 						return new ResponseEntity<String>("status:'failure',message:'data id is not matching'",
@@ -167,16 +171,62 @@ public class ToDoDataController {
 	 * @param req
 	 * @param resp
 	 * @return ResponseEntity 
+	 * @throws JsonProcessingException 
 	 */
-	@RequestMapping(value = "noteToDelete/{id}", method = RequestMethod.GET) 
+	@RequestMapping(value ="/noteToDelete/{id}", method = RequestMethod.GET) 
 	public ResponseEntity<String> noteToDelete(@PathVariable("id") int updateId, HttpServletRequest req,
-			HttpServletResponse resp) {
-
+			HttpServletResponse resp) throws JsonProcessingException {
+System.out.println("inside notetodelete");
 		HttpSession session = req.getSession();
 		User user = (User) session.getAttribute("user");
 		if (user != null)                                            // checking that user is logged in or not
 		{
-			int id = user.getId();                                   // getting the user id who is login
+			
+			boolean result = dataSerInter.noteToDelete(updateId);
+
+			System.out.println("result"+result);
+			if (result ) {
+				
+				List<ToDoData> todoList = dataSerInter.listOfNotes(user.getId());
+				
+				ObjectMapper mapper = new ObjectMapper();
+				ObjectNode root = mapper.createObjectNode();
+				
+				root.put("status", "success");
+				root.putPOJO("todo", todoList);
+				
+				String data = mapper.writeValueAsString(root);
+				System.out.println( data ); 
+				System.out.println("line above the return ");
+				return new ResponseEntity<String>(data, HttpStatus.OK);
+				
+			} else {
+				ObjectMapper mapper = new ObjectMapper();
+				ObjectNode root = mapper.createObjectNode();
+				
+				root.put("status", "toDoNot there");
+				String data = mapper.writeValueAsString(root);
+				System.out.println( data ); 
+				
+				return new ResponseEntity<String>(data, HttpStatus.NOT_FOUND);
+			}
+		}
+		else{
+		
+			ObjectMapper mapper = new ObjectMapper();
+			ObjectNode root = mapper.createObjectNode();
+			
+			root.put("status", "signIn first");
+			String data = mapper.writeValueAsString(root);
+			System.out.println( data );
+		
+		return new ResponseEntity<String>(data, HttpStatus.UNAUTHORIZED);
+		
+		}
+	}
+	
+}		
+			/*int id = user.getId();                                   // getting the user id who is login
 			List<ToDoData> listofdata = dataSerInter.listOfNotes(id);// calling the dataList method based on id
 			Iterator<ToDoData> iterator = listofdata.iterator();     // iterating
 			while (iterator.hasNext()) {
@@ -196,5 +246,5 @@ public class ToDoDataController {
 		}
 		return new ResponseEntity<String>("not login", HttpStatus.NOT_ACCEPTABLE);
 	}
-}
+}*/
 /////////////////////////////end of method//////////////////////////////////////////////////////////////////

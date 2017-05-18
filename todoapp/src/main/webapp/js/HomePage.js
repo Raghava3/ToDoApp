@@ -1,10 +1,13 @@
-myApp
-$(document).ready(
+myApp.service("homepageService",function(){
+	
+this.homepage=function(){
+	$('#addnote').show();
+          $(document).ready(
 			function() {
 				$("body").click(
 						function(event) {
 							
-							if (event.target.id == "gridicon") {
+						/*	if (event.target.id == "gridicon") {
 								
 								$("#listicon").show();
 								$("#gridicon").hide();
@@ -15,9 +18,27 @@ $(document).ready(
 								$("#listicon").hide();
 								$("#gridicon").show();
 								}
-						
-
-							if (event.target.id == "form"
+						*/
+							 console.log("inside homepage");
+							
+							 if(event.target.id=="singleline")
+								{
+									console.log(event);
+								 
+								$('#singleline').hide();
+								$('#addnote').show();		
+								
+								}
+								
+							 if(event.target.id!="singleline" || event.target.id!="titleaddnote" || event.target.id!="descriptionaddnote")  
+                            	   
+                            	   {
+								console.log(event);
+                            	   $('#singleline').show();
+           						 $('#addnote').hide();		
+                            	   }
+							
+							/*if (event.target.id == "form"
 									|| event.target.id == "newNote"
 									|| event.target.className == "ff"
 									|| event.target.id == "title"
@@ -41,13 +62,15 @@ $(document).ready(
 								{
 								$('#container div').removeClass('grid').addClass('list');
 								}
-				 });
+				 });*/
 				
 			});
 
 	
-	
-	function searchDiv()
+});
+}
+
+	/*function searchDiv()
 	{
 		  document.getElementById("search").style.backgroundColor="white";
 	}
@@ -86,6 +109,6 @@ $(document).ready(
 			 document.getElementById("pop").style.visibility="hidden";
 				document.getElementById("ff1").style.opacity=1;},1100);
 	
-		}
+		}*/
 			
-	
+});

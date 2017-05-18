@@ -35,6 +35,6 @@
 <script src="js/controller/HomeController.js" type="text/javascript"></script>
 
 <script src="js/Signup.js" type="text/javascript"></script> 
-
+<script src="js/HomePage.js" type="text/javascript"></script>
 
 </html>

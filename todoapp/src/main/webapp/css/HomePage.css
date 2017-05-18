@@ -364,16 +364,16 @@ width: 28%;
 }
 #addnotemargin
 {
-	margin-top: 86px;
+	margin-top: 0px;
 }
 
 
 #addnote
 {
-	width:70%;
+	width:80%;
 	height:16%;
    background-color: white;
-   margin-top:8px;
+   margin-top:9%;
 }
 #titleaddnote
 {
@@ -397,4 +397,11 @@ width: 28%;
 	width:100%;
 	height:20%;
 	
+}
+#singleline
+{
+	width:70%	;
+	height:10%;
+	background-color: white;
+	margin-top: 9%;
 }

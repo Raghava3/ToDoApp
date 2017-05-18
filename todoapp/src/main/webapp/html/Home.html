@@ -23,14 +23,19 @@
 </div>
 </div>
 
-<div class="row-md-2">
+<div class="col-sm-3"></div>
+<div class="col-sm-9" >
+<div id="singleline" >take a note</div>
+</div>
+<div class="row">
 <div class="col-sm-3"></div>
 <div class="col-sm-9" id="addnotemargin">
 <form>
+
 <div  id="addnote">
 <div id="titleaddnote" >  <input type="text" name="title"        style="border: none ;width:100%; height:100%;   id="title" data-ng-model="title" placeholder="title"></div>
 <div id="descriptionaddnote"><input type="text" name="description"   style="border: none ;width:100%; height:100%;  id="description" data-ng-model="description" placeholder="description"></div>
-<div id="donebutton"><input type="submit" style="border: none ;width:100%; height:100%; value="" data-ng-click="addNote()"></div>
+<div id="donebutton"><input id="donebt" type="submit" style="border: none ;width:100%; height:100%; value="" data-ng-click="addNote()"></div>
 </div>
 </form> 
 </div>
@@ -43,10 +48,12 @@
 	  <div class="row-sm-1">
 		<br>
 		<br>
-		<div  id="note">
+		<div id="note">
 		<div id="titlenote" ><b>{{todo.title}}</b></div>
 		<div id="descriptionnote">{{todo.description}}</div>
-		</div>
+		<div id="deletenote">{{todo.id}}</div>
+		<span data-ng-click="deleteNotes(todo.id)">delete</span>	
+ 		</div>
 		</br>
 		
 	</div>
