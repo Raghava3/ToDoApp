@@ -46,7 +46,7 @@ myApp.controller("HomeController",function ($scope,  $state,toDoDataService ) {
 
 
 	
-$scope.deleteNotes=function(id)
+$scope.deleteNotes=function(id,index)
 {
 	console.log("inside delete")
 	var del = toDoDataService.deleteNote(id);
@@ -54,9 +54,12 @@ $scope.deleteNotes=function(id)
 	
 		if( data.status == 200 ) {
 			
-			console.log(data);
+			if(index>-1)
+				{
+				$scope.task.splice(index,1);
+				}
 			
-			$scope.toDoList.push(data.data.todo);
+			
 			
 		}
 		
